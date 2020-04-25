@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         version="4.0">
+<!--    <servlet>-->
+<!--        <servlet-name>ServletJsp</servlet-name>-->
+<!--        <servlet-class>jsp.ServletJsp</servlet-class>-->
+<!--    </servlet>-->
+<!--    <servlet-mapping>-->
+<!--        <servlet-name>ServletJsp</servlet-name>-->
+<!--        <url-pattern>/tempJsp</url-pattern>-->
+<!--    </servlet-mapping>-->
+    
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+        <welcome-file>default.jsp</welcome-file>
+    </welcome-file-list>
+    
+<!--    <error-page>-->
+<!--        <error-code>404</error-code>-->
+<!--        <location>/error.jsp</location>-->
+<!--    </error-page>-->
+
+    <jsp-config>
+        <jsp-property-group>
+            <url-pattern>/Page.jsp</url-pattern>
+            <include-prelude>/Header.jsp</include-prelude>
+        </jsp-property-group>
+        <jsp-property-group>
+            <url-pattern>/Page.jsp</url-pattern>
+            <include-coda>/Footer.jsp</include-coda>
+        </jsp-property-group>
+    </jsp-config>
+
+<!--    <login-config>-->
+<!--        <auth-method>BASIC</auth-method>-->
+<!--        <realm-name>This is real name</realm-name>-->
+<!--    </login-config>-->
+<!--    <security-constraint>-->
+<!--        <web-resource-collection>-->
+<!--            <web-resource-name>SecurJsp</web-resource-name>-->
+<!--            <url-pattern>/secur/*</url-pattern>-->
+<!--        </web-resource-collection>-->
+<!--        <auth-constraint>-->
+<!--            <role-name>admin</role-name>-->
+<!--        </auth-constraint>-->
+<!--    </security-constraint>-->
+<!--    <security-role>-->
+<!--        <role-name>admin</role-name>-->
+<!--    </security-role>-->
+
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <form-login-config>
+            <form-login-page>/secur/PageLogin.jsp</form-login-page>
+            <form-error-page>/secur/Error.jsp</form-error-page>
+        </form-login-config>
+    </login-config>
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>SecurJsp</web-resource-name>
+            <url-pattern>/secur/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>admin</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-role>
+        <role-name>admin</role-name>
+    </security-role>
+
+<!--    <filter>-->
+<!--        <filter-name>MyNewFilter</filter-name>-->
+<!--        <filter-class>jsp.MyFilter</filter-class>-->
+<!--    </filter>-->
+<!--    <filter-mapping>-->
+<!--        <filter-name>MyNewFilter</filter-name>-->
+<!--        <url-pattern>/MyNewFilter</url-pattern>-->
+<!--    </filter-mapping>-->
+
+
+</web-app>
