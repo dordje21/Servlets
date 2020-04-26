@@ -1,7 +1,10 @@
 package ee;
 
 import javax.enterprise.inject.Alternative;
+import javax.enterprise.inject.Disposes;
 import javax.enterprise.inject.Produces;
+import javax.enterprise.inject.spi.InjectionPoint;
+import javax.enterprise.inject.spi.configurator.InjectionPointConfigurator;
 import javax.inject.Inject;
 import javax.inject.Qualifier;
 import javax.servlet.ServletException;
@@ -12,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
@@ -46,6 +51,8 @@ public class DependencyInjectionExample extends HttpServlet {
     int i;
     @Inject
     Car car;
+    @Inject
+    Logger logger;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 //        System.out.println(student.getName());
@@ -55,6 +62,7 @@ public class DependencyInjectionExample extends HttpServlet {
         resp.getWriter().write(worker.getName());
         System.out.println(s + i + car.name);
         resp.getWriter().write(s + " " + i + car.name + S2);
+        logger.log(Level.ALL, "message");
     }
 }
 
@@ -105,7 +113,7 @@ class Worker implements Person {
 @Target({FIELD, TYPE, METHOD})
 @interface S2{}
 
-class Product{
+class Producer{
     @Produces
     String s = " string ";
     @Produces
@@ -117,6 +125,9 @@ class Product{
     Car getCar(){
         return new Car("Mers");
     }
+    public void clean(@Disposes Car car){
+        car.clean();
+    }
 }
 
 class Car{
@@ -124,5 +135,16 @@ class Car{
 
     public Car(String name) {
         this.name = name;
+    }
+
+    public void clean(){
+        System.out.println(" car clean ");
+    }
+}
+
+class MyLogger{
+    @Produces
+    public Logger getLogger(InjectionPoint injectionPoint){
+        return Logger.getLogger(injectionPoint.getMember().getDeclaringClass().getName());
     }
 }

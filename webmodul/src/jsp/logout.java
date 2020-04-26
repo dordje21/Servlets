@@ -13,5 +13,6 @@ public class logout extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getSession().invalidate();
+        resp.sendRedirect("/webmodul_war_exploded/secur/Page.jsp");
     }
 }
