@@ -1,5 +1,7 @@
 package ee;
 
+import javax.enterprise.inject.Alternative;
+import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Qualifier;
 import javax.servlet.ServletException;
@@ -17,12 +19,12 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @WebServlet("/diExample")
 public class DependencyInjectionExample extends HttpServlet {
     @Inject
-    @StudentAnotation
+//    @StudentAnotation
 //    Student student;
     Person person;
 
     @Inject
-    @WorkerAnotation
+//    @WorkerAnotation
 //    Student student;
     Person worker;
 
@@ -35,7 +37,15 @@ public class DependencyInjectionExample extends HttpServlet {
 //    public void setStudent(Student student) {
 //        this.student = student;
 //    }
-
+    @Inject
+    String s;
+    @Inject
+    @S2
+    String S2;
+    @Inject
+    int i;
+    @Inject
+    Car car;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 //        System.out.println(student.getName());
@@ -43,23 +53,26 @@ public class DependencyInjectionExample extends HttpServlet {
         resp.getWriter().write(person.getName());
         System.out.println(worker.getName());
         resp.getWriter().write(worker.getName());
+        System.out.println(s + i + car.name);
+        resp.getWriter().write(s + " " + i + car.name + S2);
     }
 }
 
-@Qualifier
-@Retention(RUNTIME)
-@Target({FIELD, TYPE, METHOD})
-@interface StudentAnotation{}
-
-@Qualifier
-@Retention(RUNTIME)
-@Target({FIELD, TYPE, METHOD})
-@interface WorkerAnotation{}
+//@Qualifier
+//@Retention(RUNTIME)
+//@Target({FIELD, TYPE, METHOD})
+//@interface StudentAnotation{}
+//
+//@Qualifier
+//@Retention(RUNTIME)
+//@Target({FIELD, TYPE, METHOD})
+//@interface WorkerAnotation{}
 
 interface Person{
     String getName();
 }
-@StudentAnotation
+//@StudentAnotation
+@Alternative
 class Student implements Person {
     public String getName() {
         name="student";
@@ -73,7 +86,7 @@ class Student implements Person {
     private String name;
 
 }
-@WorkerAnotation
+//@WorkerAnotation
 class Worker implements Person {
     public String getName() {
         name="worker";
@@ -86,4 +99,30 @@ class Worker implements Person {
 
     private String name;
 
+}
+@Qualifier
+@Retention(RUNTIME)
+@Target({FIELD, TYPE, METHOD})
+@interface S2{}
+
+class Product{
+    @Produces
+    String s = " string ";
+    @Produces
+    @S2
+    String s2 = " string2 ";
+    @Produces
+    int i = 15;
+    @Produces
+    Car getCar(){
+        return new Car("Mers");
+    }
+}
+
+class Car{
+    String name;
+
+    public Car(String name) {
+        this.name = name;
+    }
 }
