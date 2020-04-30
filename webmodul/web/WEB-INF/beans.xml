@@ -8,5 +8,9 @@
     <alternatives>
         <class>ee.Student</class>
     </alternatives>
+    <interceptors>
+        <class>ee.Interceptor</class>
+    </interceptors>
+    <decorators><class>ee.Decorator</class></decorators>
 </beans>
 
