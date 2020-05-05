@@ -24,4 +24,9 @@ public class EjbBean implements EjbInterface{
     void postConstruct(){
         System.out.println("first bean");
     }
+
+    @Schedule(second = "*", minute = "*", hour = "*", persistent = true)
+    private void printMessage(){
+        System.out.println("hello");
+    }
 }
